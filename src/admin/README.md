@@ -20,9 +20,9 @@
 
 
 #Usage:
-1. Add the following to the **TOP** of the main index file (***must be the first line***):
+1. Add the following to the **TOP** of the main index file (***must be the first line***):<br>
   `require_once 'admin/session.php';`
-2. Add the following at the end of body (can be anywhere, for performance and override, it's better at the end)
+2. Add the following at the end of body (can be anywhere, for performance and override, it's better at the end)<br>
   `require_once 'admin/include.php';`
 3. Edit `/admin/sidebar/sidebar.php` for the relevant management pages
 4. In case specific styling is needed, edit the css file `/admin/css/site-specific.css`.
@@ -34,6 +34,7 @@
 <br>
 <br>
 <br>
+
 #Good luck :)
 -------
 <br>
