@@ -21,9 +21,9 @@
 
 #Usage:
 1. Add the following to the **TOP** of the main index file (***must be the first line***):
-		require_once 'admin/session.php';
+  `require_once 'admin/session.php';`
 2. Add the following at the end of body (can be anywhere, for performance and override, it's better at the end)
-		require_once 'admin/include.php';
+  `require_once 'admin/include.php';`
 3. Edit `/admin/sidebar/sidebar.php` for the relevant management pages
 4. In case specific styling is needed, edit the css file `/admin/css/site-specific.css`.
 5. Edit the meta data table name in `/admin/php/cms-dynamic-elements.php`
