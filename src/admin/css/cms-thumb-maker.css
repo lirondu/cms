@@ -1,0 +1,30 @@
+#thumb_maker_error_modal ul {
+	list-style: decimal;
+	padding-left: 30px;
+}
+
+#thumbs_progress {
+	position: fixed;
+	bottom: 50px;
+	left: calc(50% - 200px);
+	z-index: 2000;
+	display: none;
+	width: 400px;
+	text-align: center;
+	border: 1px solid #BBB;
+	border-radius: 4px;
+}
+
+#progress_title {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+#thumb_maker_error_modal ul li h6 {
+	font-size: 1em;
+	font-weight: bold;
+}
+
+#thumb_maker_error_modal p {
+	font-weight: bold;
+}

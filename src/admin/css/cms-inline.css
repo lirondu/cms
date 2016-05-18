@@ -1,0 +1,281 @@
+*[cms-inline=text],
+*[cms-inline=editor],
+*[cms-inline=list],
+.cms-editable-pic-browse-cont {
+	border: 1px dashed #555;
+	border-radius: 4px;
+}
+
+.cms-editable-pic-browse-cont {
+	position: relative;
+}
+
+.cms-editable-pic-browse-btn {
+	position: absolute;
+	top: calc(50% - 16px);
+	right: 10px;
+}
+
+#cms_inline_elements_list {
+	display: none;
+}
+
+div#ok-message-box,
+div#error-message-box {
+	z-index: 3000;
+	display: none;
+	height: auto;
+	width: auto;
+	padding: 15px 30px;
+	position: fixed;
+	bottom: 40px;
+	right: 25px;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+#admin_sidebar {
+	direction: ltr;
+	position: fixed;
+	top: calc(50% - 150px);
+	left: -160px;
+	height: 300px;
+	width: 190px;
+	border-radius: 0 4px 4px 0;
+	display: inline-block;
+	background-color: #337AB7;
+	background-color: #333;
+}
+
+#admin_sidebar .links-cont, #admin_sidebar .header-cont {
+	float: left;
+	height: 100%;
+}
+
+#admin_sidebar .links-cont{
+	width: 160px;
+	padding-top: 20px;
+}
+
+#admin_sidebar .header-cont {
+	background-color: #337AB7;
+	width: 30px;
+	border-radius: 0 4px 4px 0;
+}
+
+#admin_sidebar .links-cont li {
+	width: 100%;
+}
+
+#admin_sidebar .links-cont li a {
+	display: inline-block;
+	text-decoration: none;
+	color: #DDD;
+	width: 100%;
+	padding: 10px 5px;
+	border-radius: 4px;
+}
+
+#admin_sidebar .links-cont li a:hover {
+	text-decoration: none;
+	color: #000032;
+	background-color: #DDD;
+}
+
+#admin_sidebar .header-cont h5 {
+	transform: rotate(-90deg);
+	text-align: center;
+	font-size: 1.3em;
+	color: #DDD;
+	margin-top: 150px;
+}
+
+#table_manage_main_entry_select {
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	padding: 3px 6px;
+}
+
+#table_manage_main_entry_select option {
+	padding: 3px 6px;
+}
+
+#table_manage_modal .table-manage-thumb {
+	height: 50px;
+	width: 50px;
+	margin-right: 20px;
+	object-fit: cover;
+}
+
+.table-manage-split-header {
+	float: left;
+	margin-top: 2px;
+	margin-right: 10px;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+#table_manage_modal .cms-table {
+	border-radius: 4px;
+	/*width: 85%;*/
+	/*margin: 0 auto;*/
+	border-collapse: collapse;
+	border: 3px solid black;
+	border-style: hidden;
+	box-shadow: 0 0 0 1px #DDD;
+}
+
+#table_manage_modal .cms-table td {
+	vertical-align: middle;
+}
+
+#table_manage_modal .btn-xs {
+	padding: 3px 5.5px 3.5px 5px;
+	font-size: 0.7em;
+}
+
+#meta_keywords, #meta_description {
+	resize: none;
+}
+
+#thumbs_progress {
+	width: 350px;
+	margin: 0 auto;
+	border: 1px solid #BBB;
+	
+}
+
+
+/*
+
+.cms-table {
+	border-radius: 2px;
+	width: 85%;
+	margin: 0 auto;
+	border-collapse: collapse;
+	border: 3px solid black;
+	border-style: hidden;
+	box-shadow: 0 0 0 1px #DDD;
+}
+
+.cms-table td:first-child {
+	width: 25px;
+}
+
+.cms-table thead {
+	background-color: #000032;
+	color: #EEE;
+}
+
+.table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+	border-bottom-width: inherit;
+}
+
+.cms-table .btn-xs {
+	font-size: 0.7em;
+}*/
+
+
+
+/*.cms-editable-list option {
+	padding: 3px 5px;
+}
+
+.cms-editable-content {
+	min-height: 1em;
+}
+
+a.disabled {
+	pointer-events: none;
+	color: #909090;
+}
+
+label.error {
+	font-size: 13px !important;
+	color: #FF3333;
+}
+
+
+
+#page_content {
+	padding-bottom: 50px;
+}
+
+#gallery_column {
+	position: relative;
+	padding-bottom: 50px;
+}
+
+#add-pic {
+	position: absolute;
+	bottom: 10px;
+	left: calc(50% - 65px);
+	z-index: 100;
+}
+
+.tooltip {
+	font-size: 1em !important;
+}
+
+.modal-form li {
+	margin-bottom: 15px;
+}
+
+.modal-form li:last-child {
+	margin-bottom: 0;
+}*/
+
+/*.modal-form input[type="text"] {
+	padding: 3px 5px;
+}
+
+.modal-form .ui-spinner {
+	width: 70px;
+	padding: 3px 0;
+}
+
+.modal-form input[type="text"], .modal-form .ui-spinner {
+	border: 1px solid #b0b0b0;
+	border-radius: 4px;
+	font-size: inherit;
+}
+
+
+
+.align-center {
+	text-align: center;
+}
+
+.cms-table span.info {
+	font-size: 0.7em;
+	font-weight: bold;
+	margin-left: 10px;
+	color: #AAA;
+}
+
+.not-displayed {
+	display: none;
+}
+
+.modal-form textarea {
+	resize: none;
+}
+
+.ui-widget {
+	font-size: 1.3em;
+}
+
+#table_manage_modal select {
+	border: 1px solid #BBB;
+	border-radius: 4px;
+}
+
+#table_manage_modal select option {
+	padding: 5px 10px;
+}
+
+
+
+#table_manage_modal table td {
+	vertical-align: middle;
+}*/

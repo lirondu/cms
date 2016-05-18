@@ -1,0 +1,10 @@
+/*
+!.gitignore
+!.jshintrc
+!typings/
+!src/
+
+src/*
+!src/admin/
+!src/db/
+!src/params/

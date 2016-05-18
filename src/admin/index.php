@@ -1,0 +1,3 @@
+<?
+header('location: /admin/login');
+?>

@@ -1,0 +1,21 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, h7 {
+	margin: 0;
+}
+
+a, button,
+a:focus, button:focus {
+	outline: none;
+}
+
+body.modal-open {
+	overflow: hidden !important;
+}
+
+/*.table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+	border-bottom-width: inherit;
+}*/

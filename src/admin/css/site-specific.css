@@ -1,0 +1,12 @@
+body {
+	overflow-y: auto;
+}
+
+#logout_btn {
+	position: fixed;
+	z-index: 2222;
+}
+
+#admin_sidebar {
+	z-index: 2555;
+}
