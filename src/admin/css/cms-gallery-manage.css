@@ -1,0 +1,23 @@
+.cms-gallery-break-btn {
+	position: absolute;
+	bottom: 25px;
+	right: 5px;
+}
+
+.cms-gallery-drag-btn {
+	display: none;
+	position: absolute;
+	top: 5px;
+	left: 50%;
+}
+
+.cms-gallery-save-btn-div {
+	float: none;
+	clear: both;
+	padding-top: 25px;
+	text-align: center;
+}
+
+.display-none {
+	display: none;
+}

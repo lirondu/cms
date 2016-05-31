@@ -65,7 +65,7 @@ var CmsThumbMaker = {
 				return;
 			}
 
-						
+
 			$('#thumbs_progress').fadeIn('slow');
 
 			var allowedMimes = ['image/gif', 'image/jpeg', 'image/png'];
@@ -102,16 +102,61 @@ var CmsThumbMaker = {
 			});
 
 		}; //end upload event
-	}
+	},
+
+	// Register delete image to delete thumb
+	RegisterFileManagerDeleteEvent: function () {
+		if (!CmsConfig.elfinderParams.handlers) {
+			CmsConfig.elfinderParams.handlers = {};
+		}
+
+		CmsConfig.elfinderParams.handlers.remove = function (event) {
+			// Some uploades trigger "remove" event - workaround
+			if (event.data.added) { return; }
+			
+			var removedFiles = event.data.removed;
+			if (removedFiles.length === 0) {
+				return;
+			}
+
+			var imgExtentions = ['gif', 'jpg', 'jpeg', 'png'];
+			var filesList = '';
+
+			for (var i in removedFiles) {
+				var file = removedFiles[i];
+				var fullName = window.atob(file.substring(3));
+				var fileExtRgx = /(.+\.)(\w{2,5})/;
+				var fileExt = fullName.match(fileExtRgx)[2];
+
+				if ($.inArray(fileExt, imgExtentions) >= 0) {
+					filesList += fullName;
+
+					if (i !== (removedFiles.length - 1)) {
+						filesList += ';';
+					}
+
+					if (CmsParams.SHOW_DEBUG_MESSAGES) {
+						console.log(filesList);
+					}
+				}
+			} //end of removed file loop
+
+			$.ajax({
+				type: "POST",
+				url: "/admin/php/cms-thumb-maker.php",
+				data: 'op=delete-thumbnails&files=' + filesList,
+				success: function (msg) {
+					// TODO: if fail - log the undeleted thumb
+				},
+				fail: function (msg) {
+					// TODO: log the undeleted thumb
+				}
+			});
+
+		}; //end of remove handler
+	},
 
 };
-
-// ThumbMaker.topBarHeight = $('#header').height();
-// ThumbMaker.progressHeight = $('#thumbs_progress').height();
-// ThumbMaker.occupiedSpace = ThumbMaker.topBarHeight + ThumbMaker.progressHeight + 15;
-
-
-
 
 
 
@@ -119,6 +164,7 @@ $(function () {
 	if (!CmsParams.generateThumbs) { return; }
 
 	CmsThumbMaker.RegisterFileManagerUploadEvent();
+	CmsThumbMaker.RegisterFileManagerDeleteEvent();
 
 	// Close error box event
 	$('#thumbs_progress_close_btn').click(function () {
@@ -131,18 +177,4 @@ $(function () {
 			$('#thumb_maker_error_modal').find('li').remove();
 		});
 	});
-	// $('#close_error_handle').click(function () {
-	// 	$(this).parents('#thumbs_progress').attr('custom-on', 'false');
-	// 	$(this).parents('#thumbs_progress').fadeOut('slow', function () {
-	// 		$('#progress_title').html('Preparing Thumbs...');
-
-	// 		$('#thumbs_progress').removeClass('bg-danger');
-	// 		$('#thumbs_progress').addClass('bg-warning');
-
-	// 		$('#thumb_maker_error_modal').find('li').remove();
-
-	// 		$('#close_error_handle').hide();
-	// 	});
-	// });
-
 });

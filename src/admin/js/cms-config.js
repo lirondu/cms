@@ -1,4 +1,3 @@
-/* global CmsParams */
 
 var CmsConfig = {
 	

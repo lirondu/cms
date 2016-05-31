@@ -15,7 +15,3 @@ a:focus, button:focus {
 body.modal-open {
 	overflow: hidden !important;
 }
-
-/*.table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
-	border-bottom-width: inherit;
-}*/

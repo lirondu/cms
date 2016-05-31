@@ -8,7 +8,7 @@
  *			 list of names and list values selectors should be passed as attributes:
  *			 (each attribute is a comma seperated list)
  *			 'cms-list-names', 'cms-list-values'
- *			 (if selected value needed) pass 'cms-list-selected' attribute
+ *			 (if selected value needed) use 'cms-list-selected' attribute
  *		- pic-browse: adds overlay browse button to replace pic
  *			 (if img is not inside a div) pass 'cms-pic-browse-div="true"
  *
@@ -22,30 +22,73 @@
 
 // CKEDITOR global definitions
 CKEDITOR.disableAutoInline = true;
+CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
 
-CKEDITOR.on('instanceCreated', function (event) {
-	var editor = event.editor,
-		element = editor.element;
-
-	if (element.is('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7')) {
-		editor.on('configLoaded', function () {
-			editor.config.removePlugins = 'about,basicstyles,colorbutton,find,flash,font,' +
-				'forms,iframe,image,newpage,removeformat,' +
-				'scayt,smiley,specialchar,stylescombo,templates,links';
-
-			editor.config.removeButtons = 'Link,Unlink,Anchor,PasteFromWord,Outdent,Indent';
-
-		});
-	}
-});
+CKEDITOR.config.toolbar = [
+	{ name: 'basicstyles', items: ['RemoveFormat', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'] },
+	{ name: 'alignment', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'] },
+	{ name: 'clipboard', items: ['Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
+	{ name: 'editing', items: ['Scayt'] },
+	'/',
+	{ name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',] },
+	{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+	{ name: 'insert', items: ['Image', 'Smiley', 'SpecialChar'] },
+	{ name: 'styles', items: ['Styles', 'Format'] },
+	{ name: 'colors', items: ['TextColor', 'BGColor'] },
+	{ name: 'about', items: ['About'] }
+];
 
 
 var CmsInlineInit = {
 
+	/*##### Check all elements has correct attributes #####*/
+	CheckInlineElementsAttr: function () {
+		$('[cms-inline="text"],' +
+			'[cms-inline="editor"],' +
+			'[cms-inline="list"],' +
+			'[cms-inline="pic-browse"],' +
+			'[cms-inline="gallery"]').each(function () {
+				var type = $(this).attr('cms-inline');
+				var el = this.parentElement.innerHTML;
+
+				if (!$(this).attr('cms-table')) {
+					throw new Error('CmsInline Failed: Every element must have "cms-table" attribute\nCheck the following element:\n\tType: ' + type + '\n\tElement: ' + el);
+				}
+
+				if (!$(this).attr('cms-id')) {
+					throw new Error('CmsInline Failed: Every element must have "cms-id" attribute\nCheck the following element:\n\tType: ' + type + '\n\tElement: ' + el);
+				}
+
+				if (!$(this).attr('cms-field')) {
+					throw new Error('CmsInline Failed: Every element must have "cms-field" attribute\nCheck the following element:\n\tType: ' + type + '\n\tElement: ' + el);
+				}
+			});
+
+		$('[cms-inline="list"]').each(function () {
+			var el = this.parentElement.innerHTML;
+
+			if (!$(this).attr('cms-list-names')) {
+				throw new Error('CmsInline Failed: Every "list" element must have "cms-list-names" attribute\nCheck the following element:\n\tElement: ' + el);
+			}
+
+			if (!$(this).attr('cms-list-values')) {
+				throw new Error('CmsInline Failed: Every "list" element must have "cms-list-values" attribute\nCheck the following element:\n\tElement: ' + el);
+			}
+		});
+	},
+
+
 	/*##### Initializers #####*/
 
 	InitializeEditableContentElements: function () {
-		$('[cms-inline="text"], [cms-inline="editor"]').attr('contenteditable', 'true');
+		$('[cms-inline="text"], [cms-inline="text-manual"], [cms-inline="editor"]').attr('contenteditable', 'true');
+
+		$('[cms-inline="text"], [cms-inline="text-manual"], [cms-inline="editor"]').off('paste');
+		$('[cms-inline="text"], [cms-inline="text-manual"], [cms-inline="editor"]').on('paste', function (ev) {
+			ev.preventDefault();
+			var pastedText = ev.originalEvent.clipboardData.getData('text/plain').trim();
+			document.execCommand("insertHTML", false, pastedText);
+		});
 	},
 
 	InitializeEditableListElements: function () {
@@ -61,7 +104,7 @@ var CmsInlineInit = {
 			var field = $(this).attr('cms-field');
 			var listNames = $(this).attr('cms-list-names').split(',');
 			var listValues = $(this).attr('cms-list-values').split(',');
-			var listSelected = ($(this).hasAttr('cms-list-selected')) ? $(this).attr('cms-list-selected') : -1;
+			var listSelected = ($(this).attr('cms-list-selected')) ? $(this).attr('cms-list-selected') : -1;
 
 			if (listNames.length !== listValues.length) {
 				throw new Error('Cant initialize inline list!! names and values length doesn\'t match');
@@ -69,6 +112,7 @@ var CmsInlineInit = {
 
 			var selectList = $('#cms_inline_elements_list').clone();
 			selectList.attr('id', '');
+			selectList.attr('name', 'value');
 			selectList.attr('cms-inline', 'list');
 			selectList.attr('cms-table', table);
 			selectList.attr('cms-id', id);
@@ -123,6 +167,9 @@ var CmsInlineInit = {
 				$(this).remove();
 			} else {
 				parentDiv = $(this).parent('div');
+				if (parentDiv.length === 0) {
+					throw new Error('InitializePicBrowseElements: img must be in a div!!');
+				}
 			}
 
 			parentDiv.addClass('cms-editable-pic-browse-cont');
@@ -143,11 +190,24 @@ var CmsInlineInit = {
 
 $(function () {
 
+	// Verify elements has correct attributes if auto inline
+	if (CmsInlineSubmit.submitMode === 0) {
+		CmsInlineInit.CheckInlineElementsAttr();
+	}
+
 	// Markup editable content (for bootstrap tooltips)
-	$('[cms-inline="text"], [cms-inline="editor"], [cms-inline="list"], [cms-inline="pic-browse"]')
+	$('[cms-inline="text"],' +
+		'[cms-inline="text-manual"],' +
+		'[cms-inline="editor"],' +
+		'[cms-inline="list"],' +
+		'[cms-inline="pic-browse"]')
 		.attr('data-toggle', 'tooltip');
 
-	$('[cms-inline="text"], [cms-inline="editor"], [cms-inline="list"], [cms-inline="pic-browse"]')
+	$('[cms-inline="text"],' +
+		'[cms-inline="text-manual"],' +
+		'[cms-inline="editor"],' +
+		'[cms-inline="list"],' +
+		'[cms-inline="pic-browse"]')
 		.each(function () {
 			var title = 'Editable content';
 

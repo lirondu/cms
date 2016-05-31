@@ -1,8 +1,15 @@
-*[cms-inline=text],
-*[cms-inline=editor],
-*[cms-inline=list],
+[cms-inline=text],
+[cms-inline=editor],
+[cms-inline=list],
+[cms-inline=text-manual],
 .cms-editable-pic-browse-cont {
 	border: 1px dashed #555;
+	border-radius: 4px;
+}
+
+[cms-inline="editor"] p,
+[cms-inline="editor"] div {
+	border: 1px dashed red;
 	border-radius: 4px;
 }
 
@@ -144,138 +151,3 @@ div#error-message-box {
 	border: 1px solid #BBB;
 	
 }
-
-
-/*
-
-.cms-table {
-	border-radius: 2px;
-	width: 85%;
-	margin: 0 auto;
-	border-collapse: collapse;
-	border: 3px solid black;
-	border-style: hidden;
-	box-shadow: 0 0 0 1px #DDD;
-}
-
-.cms-table td:first-child {
-	width: 25px;
-}
-
-.cms-table thead {
-	background-color: #000032;
-	color: #EEE;
-}
-
-.table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
-	border-bottom-width: inherit;
-}
-
-.cms-table .btn-xs {
-	font-size: 0.7em;
-}*/
-
-
-
-/*.cms-editable-list option {
-	padding: 3px 5px;
-}
-
-.cms-editable-content {
-	min-height: 1em;
-}
-
-a.disabled {
-	pointer-events: none;
-	color: #909090;
-}
-
-label.error {
-	font-size: 13px !important;
-	color: #FF3333;
-}
-
-
-
-#page_content {
-	padding-bottom: 50px;
-}
-
-#gallery_column {
-	position: relative;
-	padding-bottom: 50px;
-}
-
-#add-pic {
-	position: absolute;
-	bottom: 10px;
-	left: calc(50% - 65px);
-	z-index: 100;
-}
-
-.tooltip {
-	font-size: 1em !important;
-}
-
-.modal-form li {
-	margin-bottom: 15px;
-}
-
-.modal-form li:last-child {
-	margin-bottom: 0;
-}*/
-
-/*.modal-form input[type="text"] {
-	padding: 3px 5px;
-}
-
-.modal-form .ui-spinner {
-	width: 70px;
-	padding: 3px 0;
-}
-
-.modal-form input[type="text"], .modal-form .ui-spinner {
-	border: 1px solid #b0b0b0;
-	border-radius: 4px;
-	font-size: inherit;
-}
-
-
-
-.align-center {
-	text-align: center;
-}
-
-.cms-table span.info {
-	font-size: 0.7em;
-	font-weight: bold;
-	margin-left: 10px;
-	color: #AAA;
-}
-
-.not-displayed {
-	display: none;
-}
-
-.modal-form textarea {
-	resize: none;
-}
-
-.ui-widget {
-	font-size: 1.3em;
-}
-
-#table_manage_modal select {
-	border: 1px solid #BBB;
-	border-radius: 4px;
-}
-
-#table_manage_modal select option {
-	padding: 5px 10px;
-}
-
-
-
-#table_manage_modal table td {
-	vertical-align: middle;
-}*/

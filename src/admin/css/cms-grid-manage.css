@@ -1,0 +1,20 @@
+.cms-grid-manage-add-btn {
+	vertical-align: middle;
+}
+
+.cms-grid-manage-add-btn:hover {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.cms-grid-manage-del-btn {
+	display: none;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+
+.cms-grid-item {
+	border: 1px dashed #AAA;
+	border-radius: 4px;
+}

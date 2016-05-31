@@ -47,8 +47,7 @@ if (isset($_POST['uname']) && isset($_POST['passwd'])) {
         <title>Eau & Gaz CMS Login</title>
         <meta charset="UTF-8" />
 		<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-		<script type="text/javascript" src="../plugins/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
-		<link href="../plugins/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" media="screen" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     </head>
 	<style>
 		body {
@@ -101,6 +100,9 @@ if (isset($_POST['uname']) && isset($_POST['passwd'])) {
 		li {
 			margin-bottom: 20px;
 		}
+		li:last-child {
+			margin-bottom: 0;
+		}
 		label {
 			display: inline-block;
 			width: 100%;
@@ -111,7 +113,7 @@ if (isset($_POST['uname']) && isset($_POST['passwd'])) {
 		input {
 			border: 1px solid #909090;
 			border-radius: 5px;
-			width: calc(100% - 10px);
+			width: 100%;
 			padding: 4px;
 			font-size: inherit;
 			font-family: inherit !important;
@@ -150,14 +152,14 @@ if (isset($_POST['uname']) && isset($_POST['passwd'])) {
 						<input type="password" id="passwd" name="passwd">
 					</li>
 					<li>
-						<input type="submit" value="Sign in">
+						<input type="submit" value="Sign in" class="btn btn-primary">
 					</li>
 				</ul>
 			</form>
 		</div>
 		<script>
 			$('input').first().focus();
-			$('input[type="submit"]').button();
+			// $('input[type="submit"]').button();
 			$('#login_error_div_close_handler').click(function (){
 				$('#login_error_div').fadeOut('slow');
 				$('input').first().focus();

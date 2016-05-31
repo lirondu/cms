@@ -27,6 +27,34 @@
 3. Edit `/admin/sidebar/sidebar.php` for the relevant management pages
 4. In case specific styling is needed, edit the css file `/admin/css/site-specific.css`.
 5. Edit the meta data table name in `/admin/php/cms-dynamic-elements.php`
+
+<br>
+
+#Parameters:
+
+##Site:
+* $SITE_NAME
+* $DB_HOST
+* $DB_USER
+* $DB_PWD
+* $DB_NAME
+* $IMAGES_BASE_DIR
+
+<br>
+
+##Admin:
+* $SHOW_DEBUG_MESSAGES
+* $IMAGES_URL
+* $THUMBS_DIR 
+* $THUMBS_SEPARATED
+* $LOGIN_MODE 
+* $LOCAL_USER
+* $LOCAL_PWD
+* $LOAD_JQUERY
+
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>

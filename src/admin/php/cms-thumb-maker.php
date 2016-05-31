@@ -81,6 +81,40 @@ class ThumbMaker {
 		
 		return true;
 	}
+	
+	
+	public static function DeleteThumb($imgFile){
+		$fileAbsPath = self::$imagesBaseDir . '/' . $imgFile;
+		$folder = '';
+		$fileName = '';
+		$thumbFullPath = '';
+		
+		if (preg_match(self::$filePathRgx, $fileAbsPath, $m)) {
+			$folder = $m[1];
+			$fileName   = $m[2];
+		} else {
+			return 'Couldn\'t get folder and file names! Try to rename the file/folder...';
+		}
+		
+		if (self::$thumbsDirSeparated) {
+			if (preg_match(self::$separateThumbRgx, $file, $match)) {
+				$thumbFullPath = self::$imagesBaseDir . '/' . $match[1] . self::$thumbsDir . '/';
+			} else {
+				return 'Wrong folder structure!! Full images must be in subfolder!!';
+			}
+		} else {
+			$thumbFullPath	 = $folder . self::$thumbsDir . '/';
+		}
+		
+		$output_filename = $thumbFullPath . $fileName;
+
+		if (file_exists($output_filename)) {
+			return unlink($output_filename);
+		}
+		
+		return true;
+	}
+	
 }
 
 // Initialize ThumbMaker statics on load
@@ -88,31 +122,12 @@ ThumbMaker::Init(CmsParams::$IMAGES_BASE_DIR, CmsParams::$THUMBS_DIR, CmsParams:
 
 
 
-
-
-// global $imagesBaseDir;
-// global $thumbsDir;
-
-
-// define('IMAGE_SIZE', 500);
-// define('IMAGES_BASE', $imagesBaseDir);
-// define('THUMBS_DIR', $thumbsDir);
-
-
+// Post Operations
 
 if ($_POST['op'] === 'create-thumbnails') {
 	$filesArray	 = explode(';', $_POST['files']);
 	$success	    = true;
 	$failedFiles = '';
-
-
-	// $m				    = [];
-	// $folder			 = '';
-	// $fileName		 = '';
-	// $fileExt		 	 = '';
-	// $winPathRgx		 = "/((?:\w:\\\\)(?:[\w-+=#$&]+\\\\)+)([\w-+=#$&]+\.\w+)/";
-	// $linuxPathRgx	 = "/((?:\/)(?:[\w-+=#$&]+\/)+)([\w-+=#$&]+\.\w+)/";
-
 
 	foreach ($filesArray as $file) {
 		if (empty($file)) {
@@ -124,54 +139,29 @@ if ($_POST['op'] === 'create-thumbnails') {
 			$success = false;
 			$failedFiles .= '<span class="label label-danger">' . $file . '</span> - ' . $result . ';';
 		}
-
-	// 	$fileAbsPath = IMAGES_BASE . $file;
-	// 	$imgSize	 = getimagesize($fileAbsPath);
-	// 	$sizeParam	 = ($imgSize[0] >= $imgSize[1]) ? 'w' : 'h';
-
-	// 	if (preg_match($winPathRgx, $fileAbsPath, $m)) {
-	// 		$folder		 = $m[1];
-	// 		$fileName	 = $m[2];
-	// 	} else if (preg_match($linuxPathRgx, $fileAbsPath, $m)) {
-	// 		$folder		 = $m[1];
-	// 		$fileName	 = $m[2];
-	// 	} else {
-	// 		$success = false;
-	// 		$failedFiles .= $file . ' - File name or path not understood, try to rename;';
-	// 		continue;
-	// 	}
-
-
-	// 	$thumbFullPath	 = $folder . '/' . THUMBS_DIR . '/';
-	// 	$output_filename = $thumbFullPath . $fileName;
-
-
-	// 	if (!file_exists($thumbFullPath)) {
-	// 		if (!mkdir($thumbFullPath, 0777, true)) {
-	// 			$success = false;
-	// 			$failedFiles .= $file . ' - Failed creating ' . $thumbFullPath . ';';
-	// 			continue;
-	// 		}
-	// 	}
-
-	// 	$phpThumb = new phpThumb();
-
-	// 	$phpThumb->setSourceData(file_get_contents($fileAbsPath));
-	// 	$phpThumb->setParameter($sizeParam, IMAGE_SIZE);
-	// 	$phpThumb->setParameter('q', 100);
-
-	// 	if ($phpThumb->GenerateThumbnail()) {
-	// 		if (!$phpThumb->RenderToFile($output_filename)) {
-	// 			$success = false;
-	// 			$failedFiles .= $file . ' - Rendering image error;';
-	// 		}
-	// 		$phpThumb->purgeTempFiles();
-	// 	} else {
-	// 		$success = false;
-	// 		$failedFiles .= $file . ' - Generate thumb file error;';
-	// 	}
 	}
 
+	echo($success) ? '1' : $failedFiles;
+	return;
+}
+
+
+if ($_POST['op'] === 'delete-thumbnails') {
+	$filesArray	 = explode(';', $_POST['files']);
+	$success	    = true;
+	$failedFiles = '';
+
+	foreach ($filesArray as $file) {
+		if (empty($file)) {
+			continue;
+		}
+		
+		$result = ThumbMaker::DeleteThumb($file);
+		if ($result !== true) {
+			$success = false;
+			$failedFiles .= '<span class="label label-danger">' . $file . '</span> - ' . $result . ';';
+		}
+	}
 
 	echo($success) ? '1' : $failedFiles;
 	return;

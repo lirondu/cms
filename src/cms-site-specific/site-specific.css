@@ -1,0 +1,17 @@
+body {
+	overflow-y: auto;
+}
+
+#logout_btn, #preview_btn {
+	position: static;
+	z-index: 2222;
+	margin-bottom: 25px;
+}
+
+#preview_btn {
+	margin-left: 10px;
+}
+
+#admin_sidebar {
+	z-index: 2555;
+}

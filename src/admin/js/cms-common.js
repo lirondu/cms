@@ -1,17 +1,7 @@
 /* global CmsParams */
 
-var CmsCommon = {};
-
-$(function () {
-
-	CmsCommon.globalOkMessageBox = $('div#ok-message-box');
-	CmsCommon.globalErrorMessageBox = $('div#error-message-box');
-
-	CmsCommon.date = new Date();
-	CmsCommon.dateYear = CmsCommon.date.getFullYear();
-
-
-	CmsCommon.GetParameterByName = function (name, url) {
+var CmsCommon = {
+	GetParameterByName: function (name, url) {
 		if (!url) {
 			url = location;
 		}
@@ -19,27 +9,9 @@ $(function () {
 		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 			results = regex.exec(url);
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-	};
-
-
-	CmsCommon.ShowResponseMessage = function (retCode) {
-		if (CmsParams.SHOW_DEBUG_MESSAGES && retCode !== '1') {
-			console.log(retCode);
-		}
-
-		if (retCode === '1') {
-			CmsCommon.globalOkMessageBox.fadeIn('slow', function () {
-				$(this).delay(1500).fadeOut('slow');
-			});
-		} else {
-			CmsCommon.globalErrorMessageBox.fadeIn('slow', function () {
-				$(this).delay(4000).fadeOut('slow');
-			});
-		}
-	};
-
-
-	CmsCommon.DbModifierAjaxPost = function (data, modData, callback) {
+	},
+	
+	DbModifierAjaxPost: function (data, modData, callback) {
 		if (modData === undefined) {
 			return;
 		}
@@ -65,10 +37,9 @@ $(function () {
 				CmsCommon.ShowResponseMessage('0');
 			}
 		});
-	};
+	},
 
-
-	CmsCommon.DebugPrintObject = function (obj) {
+	DebugPrintObject: function (obj) {
 		var out;
 		if (typeof obj === 'string') {
 			out = obj;
@@ -84,7 +55,80 @@ $(function () {
 		var pre = document.createElement('pre');
 		pre.innerHTML = out;
 		document.body.appendChild(pre);
+	},
+
+	insertPreviewButton: function () {
+		var replace;
+		var replaceElem;
+
+		if (CmsParams.objectToRemoveForPreviewBtn !== '') {
+			replace = true;
+			replaceElem = $(CmsParams.objectToRemoveForPreviewBtn);
+
+			if (replaceElem.length === 0) {
+				throw new Error('Please check "objectToRemoveForPreviewBtn" in "/admin/params/parameters.js"');
+			}
+		} else {
+			replace = false;
+			replaceElem = $('#logout_btn');
+		}
+
+		var btn = $('#preview_btn');
+
+		replaceElem.before(btn);
+
+		if (replace) {
+			replaceElem.remove();
+		}
+	}
+};
+
+$(function () {
+
+	CmsCommon.globalOkMessageBox = $('div#ok-message-box');
+	CmsCommon.globalErrorMessageBox = $('div#error-message-box');
+
+	CmsCommon.date = new Date();
+	CmsCommon.dateYear = CmsCommon.date.getFullYear();
+
+
+	CmsCommon.ShowResponseMessage = function (retCode) {
+		if (CmsParams.SHOW_DEBUG_MESSAGES && retCode !== '1') {
+			console.log(retCode);
+		}
+
+		if (retCode === '1') {
+			CmsCommon.globalOkMessageBox.fadeIn('slow', function () {
+				$(this).delay(1500).fadeOut('slow');
+			});
+		} else {
+			CmsCommon.globalErrorMessageBox.fadeIn('slow', function () {
+				$(this).delay(4000).fadeOut('slow');
+			});
+		}
 	};
+
+
+
+
+
+	// CmsCommon.DebugPrintObject = function (obj) {
+	// 	var out;
+	// 	if (typeof obj === 'string') {
+	// 		out = obj;
+	// 	} else {
+	// 		out = '';
+	// 		for (var i in obj) {
+	// 			out += i + ": " + obj[i] + "\n";
+	// 		}
+	// 	}
+
+	// 	console.log(out);
+
+	// 	var pre = document.createElement('pre');
+	// 	pre.innerHTML = out;
+	// 	document.body.appendChild(pre);
+	// };
 
 
 	CmsCommon.InsertLogoutButton = function () {
